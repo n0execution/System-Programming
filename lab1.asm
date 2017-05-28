@@ -10,7 +10,7 @@ MAIN PROC FAR
 ASSUME CS: CSEG, DS: DSEG, SS: STSEG
 ; return adress
 PUSH DS
-MOV AX, 0 ; або XOR AX, AX
+MOV AX, 0 ; or XOR AX, AX
 PUSH AX
 ; initialization of DS
 MOV AX, DSEG
