@@ -1,5 +1,5 @@
 STSEG  SEGMENT  PARA  STACK  "STACK"  
-	DB 64 DUP ("STACK")	
+DB 64 DUP ("STACK")	
 STSEG  ENDS
 
 DSEG  SEGMENT  PARA  PUBLIC  "DATA" 
@@ -75,65 +75,65 @@ ML1:
 
 ;PROCEDURE FOR READ NUMBER FROM SCREEN
 INPUTINT PROC   
-        PUSH CX
-        PUSH DX
-        PUSH BX
-        PUSH SI
+    PUSH CX
+    PUSH DX
+    PUSH BX
+    PUSH SI
 
 ; SI - SIGN MARK, BX - NUMBER
-        XOR SI, SI ;SI=0
-        XOR BX, BX ;BX=0
-        XOR CX, CX ;CX=0
+    XOR SI, SI ;SI=0
+    XOR BX, BX ;BX=0
+    XOR CX, CX ;CX=0
 
 ; ENTER FIRST NUMBER
-        MOV AH, 01h
-        INT 21h
-		TEST AL,AL ;IF STRING HAS 0 LENGTH
-			JZ some_error
+    MOV AH, 01h
+    INT 21h
+	TEST AL,AL ;IF STRING HAS 0 LENGTH
+	JZ some_error
 
 ; CHECK FOR '-' IF NOT GO TO NORMAL INIT OF SYMBOL
-        CMP AL, '-'
-			JNE input_next_symbol
+	CMP AL, '-'
+	JNE input_next_symbol
 		
 ; ELSE INPUT SIGN MARK
-        INC SI
+    INC SI
 ; INPUT NEXT SYMBOL
 
 input_symbol:     
-		MOV AH, 01h
-        INT 21h
+	MOV AH, 01h
+    INT 21h
 		
 ;IF SYMBOL GRATER THAN '9', BREAK
 input_next_symbol:     
-CMP AL, 39h
-		JG some_error
+	CMP AL, 39h
+	JG some_error
 
 ;TRANSLATE SYMBOL INTO NUMBER
 
-        CMP AL, 0dh
-			JE check_size
-		CMP AL, 01bh
-			JE the_end
-		SUB AL, 30h
-			JB some_error
+    CMP AL, 0dh
+	JE check_size
+	CMP AL, 01bh
+	JE the_end
+	SUB AL, 30h
+	JB some_error
 		
 ; AL HAS NUMBER THAT WE MUST ADD TO BX NUMBER        
-	MOV     CL, AL
+	MOV CL, AL
 	
 ; MULTIPLY RESULT ON 10.
 	MOV	AX, BX
 	MOV	DX, 10
 	MUL	DX
 	MOV BX, AX
-		;IF RESULT GRATER THAN 16 BIT ERROR
-		JC wrong_number	    
+	;IF RESULT GRATER THAN 16 BIT ERROR
+	JC wrong_number	    
        
 	ADD BX, CX  ; BX = 10 * bx + al
-		JC	wrong_number
+	JC	wrong_number
 	
        
 ; LOOP WHILE NUMBERS ENTER.
-     JMP input_symbol
+    JMP input_symbol
 	 
 ; TEST ON SIGN
 
@@ -141,12 +141,12 @@ CMP AL, 39h
 check_size:   	
 ;CHECK FOR INPUT NUMBER SIZE
 	CMP BX,9999	    
-		JA wrong_number 
+	JA wrong_number 
 	TEST SI, SI 
-		JZ write_result
+	JZ write_result
 ;CHECK FOR INPUT NUMBER SIZE
 	CMP BX,9999	    
-		JA wrong_number 
+	JA wrong_number 
     NEG BX
 		
 write_result:     
@@ -191,7 +191,7 @@ OUTPUTINT PROC
 	PUSH BX
 	MOV BX,AX      
 	OR BX, BX     
-		JNS  prepare1     
+	JNS  prepare1     
 	MOV AL, '-'     
 	INT	29h     
 	NEG BX   
@@ -206,7 +206,7 @@ prepare2:
 	PUSH DX     
 	INC CX     
 	TEST AX, AX     
-		JNZ prepare2   
+	JNZ prepare2   
 output_symbol:     
 	POP AX     
 	INT 29h     
@@ -248,7 +248,6 @@ cont:
 	JMP calculate
 	
 eq1:
-	eq1:
 	LEA DI, EQUATION1
 	CALL PRINT
 
