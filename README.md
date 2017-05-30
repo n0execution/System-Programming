@@ -5,7 +5,7 @@ First lab fills an array DEST by reversed SOURCE array.
 ---------------------------------------------------------------
 In second lab you can input an integer and it wil be outputted.
 ---------------------------------------------------------------
-#Third lab computes  equation (x - user inputted number):
+# Third lab computes  equation (x - user inputted number):
 * 35 * x (1 - x^2), if 1 < x <= 6;\n
 * x^3 - 75, if x > 6;\n
 * x^2, if x >=1.
